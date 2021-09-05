@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Rooms from "./components/Rooms";
+import rooms from "./rooms";
+import { useState } from 'react';
 
-function App() {
+const App = () => {
+
+  const [found,setFound] = useState([]);
+
+  const searchRoom = (lounge,visitor) => {
+      rooms.filter((room) => {
+        if(room.city === lounge && room.maxGuests <= visitor) {
+          setFound(room);
+        } 
+        return room;
+     })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+     <Navbar searchRoom={searchRoom} />
+     <Header />
+     <Rooms found={found} />
+     <Footer />
+    </>
   );
 }
 
